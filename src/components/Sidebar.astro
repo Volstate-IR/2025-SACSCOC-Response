@@ -10,14 +10,17 @@ const { currentPath } = Astro.props;
 const entries = (await getCollection("standards")).sort(
 	(a, b) => a.data.order - b.data.order,
 );
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
+const homeHref = base || "/";
 ---
 
 <aside class="sidebar" id="sidebar">
 	<nav aria-label="Report navigation">
 		<a
-			class={currentPath === "/" ? "link overview active" : "link overview"}
-			href="/"
-			aria-current={currentPath === "/" ? "page" : undefined}
+			class={currentPath === homeHref ? "link overview active" : "link overview"}
+			href={homeHref}
+			aria-current={currentPath === homeHref ? "page" : undefined}
 		>
 			Report Overview
 		</a>
@@ -27,7 +30,7 @@ const entries = (await getCollection("standards")).sort(
 			<ul>
 				{
 					entries.map((entry) => {
-						const href = `/standards/${entry.id}`;
+						const href = `${base}/standards/${entry.id}`;
 						const active = currentPath === href;
 						return (
 							<li>

@@ -9,6 +9,8 @@ import Joshua from "../assets/joshua_profile_photo.jpg";
 const entries = (await getCollection("standards")).sort(
 	(a, b) => a.data.order - b.data.order,
 );
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
 ---
 
 <BaseLayout title="Report Overview">
@@ -125,7 +127,7 @@ const entries = (await getCollection("standards")).sort(
 			{
 				entries.map((entry) => (
 					<li>
-						<a class="card" href={`/standards/${entry.id}`}>
+						<a class="card" href={`${base}/standards/${entry.id}`}>
 							<span class="numeral card-number">{entry.data.number}</span>
 							<span class="card-title">{entry.data.title}</span>
 							<span class="card-summary">{entry.data.statement}</span>
