@@ -35,6 +35,13 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
 		</div>
 		<SiteFooter />
 
+		<button type="button" id="back-to-top" class="back-to-top">
+			<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+				<path d="M12 5l-7 7h4v7h6v-7h4z" fill="currentColor" />
+			</svg>
+			<span>Back to top</span>
+		</button>
+
 		<script>
 			const toggle = document.getElementById("nav-toggle-button");
 			const backdrop = document.getElementById("sidebar-backdrop");
@@ -67,6 +74,20 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
 					toggle?.focus();
 				}
 			});
+
+			const backToTop = document.getElementById("back-to-top");
+
+			function updateBackToTop() {
+				backToTop?.classList.toggle("visible", window.scrollY > 500);
+			}
+
+			backToTop?.addEventListener("click", () => {
+				const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+				window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+			});
+
+			window.addEventListener("scroll", updateBackToTop, { passive: true });
+			updateBackToTop();
 		</script>
 	</body>
 </html>
@@ -110,6 +131,71 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
 	@media (max-width: 900px) {
 		.content {
 			padding: var(--space-6) var(--space-4);
+		}
+	}
+
+	.back-to-top {
+		position: fixed;
+		right: var(--space-5);
+		bottom: var(--space-5);
+		z-index: 40;
+		display: flex;
+		align-items: center;
+		gap: var(--space-2);
+		padding: var(--space-3) var(--space-5);
+		border: none;
+		border-radius: 999px;
+		background: var(--color-red-700);
+		color: white;
+		font-size: 0.95rem;
+		font-weight: 600;
+		box-shadow: var(--shadow-md);
+		cursor: pointer;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(8px);
+		transition:
+			opacity 0.2s ease,
+			visibility 0.2s,
+			transform 0.15s ease,
+			box-shadow 0.15s ease,
+			background 0.15s ease;
+	}
+
+	.back-to-top svg {
+		flex-shrink: 0;
+		transition: transform 0.15s ease;
+	}
+
+	.back-to-top.visible {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	.back-to-top:hover {
+		background: var(--color-red-600);
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-md), 0 4px 10px rgba(19, 26, 43, 0.15);
+	}
+
+	.back-to-top:hover svg {
+		transform: translateY(-2px);
+	}
+
+	.back-to-top:active {
+		transform: translateY(0) scale(0.96);
+		transition-duration: 0.05s;
+	}
+
+	.back-to-top:focus-visible {
+		outline: 2px solid var(--color-red-700);
+		outline-offset: 2px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.back-to-top {
+			transition: none;
 		}
 	}
 </style>

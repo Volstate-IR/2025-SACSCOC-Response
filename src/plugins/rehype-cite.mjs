@@ -64,21 +64,34 @@ function wrapSections(tree) {
 	if (jumpTargets.length > 1) {
 		tree.children.unshift({
 			type: "element",
-			tagName: "ul",
-			properties: { className: ["section-jump"] },
-			children: jumpTargets.map(({ slug, label }) => ({
-				type: "element",
-				tagName: "li",
-				properties: {},
-				children: [
-					{
+			tagName: "nav",
+			properties: { className: ["section-jump-nav"], "aria-label": "Jump to section" },
+			children: [
+				{
+					type: "element",
+					tagName: "span",
+					properties: { className: ["section-jump-label"] },
+					children: [{ type: "text", value: "Jump to:" }],
+				},
+				{
+					type: "element",
+					tagName: "ul",
+					properties: { className: ["section-jump"] },
+					children: jumpTargets.map(({ slug, label }) => ({
 						type: "element",
-						tagName: "a",
-						properties: { href: `#${slug}` },
-						children: [{ type: "text", value: label }],
-					},
-				],
-			})),
+						tagName: "li",
+						properties: {},
+						children: [
+							{
+								type: "element",
+								tagName: "a",
+								properties: { href: `#${slug}` },
+								children: [{ type: "text", value: label }],
+							},
+						],
+					})),
+				},
+			],
 		});
 	}
 }

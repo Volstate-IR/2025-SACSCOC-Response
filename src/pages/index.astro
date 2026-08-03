@@ -3,6 +3,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import campusPhoto from "../assets/vscc.jpg";
+import Greg from "../assets/greg_profile_photo.jpg"
+import Joshua from "../assets/joshua_profile_photo.jpg";
 
 const entries = (await getCollection("standards")).sort(
 	(a, b) => a.data.order - b.data.order,
@@ -46,6 +48,77 @@ const entries = (await getCollection("standards")).sort(
 		</ol>
 	</section>
 
+	<section class="callout contacts">
+		<h2>Report Contacts</h2>
+		<div class="contact-grid">
+			<article class="contact-card">
+				<div class="contact-photo" aria-hidden="true">
+					<Image src={Greg} alt="Greg McCalley, VP for Research and Primary Contact"/>
+				</div>
+				<div class="contact-details">
+					<p class="contact-role">Primary Contact</p>
+					<p class="contact-name">Greg McCalley</p>
+					<p class="contact-title">Vice President of Research, Assessment, and Special Initiatives</p>
+					<p>
+						<a class="contact-link" href="tel:+16152303204">
+							<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+								<path
+									fill="currentColor"
+									d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.25 1.01z"
+								/>
+							</svg>
+							(615) 230-3204
+						</a>
+					</p>
+					<p>
+						<a class="contact-link" href="mailto:greg.mccalley@volstate.edu">
+							<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+								<path
+									fill="currentColor"
+									d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm2.4-.5 7.03 5.63a1 1 0 0 0 1.14 0L19.6 5.5zM4 8.1V18h16V8.1l-7.03 5.63a2 2 0 0 1-2.94 0z"
+								/>
+							</svg>
+							Greg.McCalley@volstate.edu
+						</a>
+					</p>
+				</div>
+			</article>
+
+			<article class="contact-card">
+				<div class="contact-photo" aria-hidden="true">
+					<Image src={Joshua} alt="Joshua King, Data Engineer and Technical Contact"/>
+				</div>
+				<div class="contact-details">
+					<p class="contact-role">Technical Contact</p>
+					<p class="contact-name">Joshua King</p>
+					<p class="contact-title">Data Engineer</p>
+					<p>
+						<a class="contact-link" href="tel:+16152303298">
+							<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+								<path
+									fill="currentColor"
+									d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.25 1.01z"
+								/>
+							</svg>
+							(615) 230-3298
+						</a>
+					</p>
+					<p>
+						<a class="contact-link" href="mailto:joshua.king@volstate.edu">
+							<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+								<path
+									fill="currentColor"
+									d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm2.4-.5 7.03 5.63a1 1 0 0 0 1.14 0L19.6 5.5zM4 8.1V18h16V8.1l-7.03 5.63a2 2 0 0 1-2.94 0z"
+								/>
+							</svg>
+							Joshua.King@volstate.edu
+						</a>
+					</p>
+				</div>
+			</article>
+		</div>
+	</section>
+
 	<section class="standards-index">
 		<h2>Standards Addressed</h2>
 		<ul class="cards">
@@ -68,7 +141,7 @@ const entries = (await getCollection("standards")).sort(
 	.hero {
 		position: relative;
 		margin: calc(var(--space-7) * -1) calc(var(--space-6) * -1) var(--space-7);
-		border-radius: var(--radius-lg);
+		border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 		overflow: hidden;
 		min-height: 320px;
 	}
@@ -134,6 +207,97 @@ const entries = (await getCollection("standards")).sort(
 		margin: 0;
 		font-weight: 600;
 		color: var(--color-ink);
+	}
+
+	.contacts {
+		margin-bottom: var(--space-7);
+	}
+
+	.contact-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		gap: var(--space-5);
+		margin-top: var(--space-4);
+	}
+
+	.contact-card {
+		display: flex;
+		align-items: center;
+		gap: var(--space-4);
+		padding: var(--space-4);
+		border: 1px solid var(--color-line);
+		border-radius: var(--radius-md);
+		background: var(--color-paper);
+	}
+
+	.contact-photo {
+		flex: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 124px;
+		height: 124px;
+		border-radius: 50%;
+		background: var(--color-blue-100);
+		color: var(--color-blue-700);
+		overflow: hidden;
+	}
+
+	.contact-photo :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.contact-details p {
+		margin: 0;
+	}
+
+	.contact-role {
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--color-red-700);
+		margin-bottom: var(--space-1) !important;
+	}
+
+	.contact-name {
+		font-weight: 600;
+		font-family: var(--font-display);
+		color: var(--color-ink);
+	}
+
+	.contact-title {
+		color: var(--color-ink-muted);
+		margin-bottom: var(--space-2) !important;
+	}
+
+	.contact-details a {
+		color: var(--color-blue-700);
+	}
+
+	.contact-link {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		text-decoration: none;
+		transition: color 0.15s ease;
+	}
+
+	.contact-link svg {
+		flex: none;
+		color: var(--color-ink-muted);
+		transition: color 0.15s ease;
+	}
+
+	.contact-link:hover {
+		color: var(--color-blue-600);
+		text-decoration: underline;
+	}
+
+	.contact-link:hover svg {
+		color: var(--color-blue-600);
 	}
 
 	.navigating {
