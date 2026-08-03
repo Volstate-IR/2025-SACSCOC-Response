@@ -1,0 +1,158 @@
+---
+import { getCollection } from "astro:content";
+
+interface Props {
+	currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const entries = (await getCollection("standards")).sort(
+	(a, b) => a.data.order - b.data.order,
+);
+---
+
+<aside class="sidebar" id="sidebar">
+	<nav aria-label="Report navigation">
+		<a
+			class={currentPath === "/" ? "link overview active" : "link overview"}
+			href="/"
+			aria-current={currentPath === "/" ? "page" : undefined}
+		>
+			Report Overview
+		</a>
+
+		<div class="group">
+			<p class="group-label">Standards</p>
+			<ul>
+				{
+					entries.map((entry) => {
+						const href = `/standards/${entry.id}`;
+						const active = currentPath === href;
+						return (
+							<li>
+								<a href={href} aria-current={active ? "page" : undefined} class={active ? "link active" : "link"}>
+									<span class="link-number">{entry.data.number}</span>
+									<span>{entry.data.title}</span>
+								</a>
+							</li>
+						);
+					})
+				}
+			</ul>
+		</div>
+	</nav>
+</aside>
+
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+<style>
+	.sidebar {
+		position: sticky;
+		top: var(--header-height);
+		width: var(--sidebar-width);
+		flex: none;
+		height: calc(100vh - var(--header-height));
+		overflow-y: auto;
+		padding: var(--space-5) var(--space-4);
+		background: var(--color-surface-raised);
+		border-right: 1px solid var(--color-line);
+	}
+
+	.overview {
+		font-weight: 600;
+		margin-bottom: var(--space-5);
+	}
+
+	.group {
+		margin-bottom: var(--space-6);
+	}
+
+	.group-label {
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--color-ink-muted);
+		margin: 0 var(--space-3) var(--space-2);
+	}
+
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.link {
+		display: flex;
+		align-items: baseline;
+		gap: var(--space-3);
+		padding: var(--space-2) var(--space-3);
+		border-left: 3px solid transparent;
+		border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+		color: var(--color-ink);
+		text-decoration: none;
+		font-size: 0.92rem;
+	}
+
+	.link:hover {
+		background: var(--color-surface);
+		color: var(--color-ink);
+	}
+
+	.link.active {
+		background: color-mix(in srgb, var(--color-crimson-600) 10%, white);
+		border-left-color: var(--color-crimson-600);
+		color: var(--color-crimson-700);
+		font-weight: 600;
+	}
+
+	.link-number {
+		flex: none;
+		font-variant-numeric: tabular-nums;
+		color: var(--color-ink-muted);
+		font-size: 0.82rem;
+	}
+
+	.link.active .link-number {
+		color: var(--color-crimson-600);
+	}
+
+	.sidebar-backdrop {
+		display: none;
+	}
+
+	@media (max-width: 900px) {
+		.sidebar {
+			position: fixed;
+			top: var(--header-height);
+			left: 0;
+			bottom: 0;
+			z-index: 40;
+			height: auto;
+			transform: translateX(-100%);
+			transition: transform 0.2s ease;
+			box-shadow: var(--shadow-md);
+		}
+
+		:global(body.nav-open) .sidebar {
+			transform: translateX(0);
+		}
+
+		.sidebar-backdrop {
+			display: block;
+			position: fixed;
+			inset: var(--header-height) 0 0 0;
+			z-index: 35;
+			background: rgba(16, 25, 63, 0.4);
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.2s ease;
+		}
+
+		:global(body.nav-open) .sidebar-backdrop {
+			opacity: 1;
+			pointer-events: auto;
+		}
+	}
+</style>

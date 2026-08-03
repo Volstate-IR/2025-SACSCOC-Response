@@ -1,0 +1,92 @@
+---
+interface StandardLink {
+	href: string;
+	number: string;
+	title: string;
+}
+
+interface Props {
+	prev?: StandardLink;
+	next?: StandardLink;
+}
+
+const { prev, next } = Astro.props;
+---
+
+<nav class="prev-next" aria-label="Standard navigation">
+	{
+		prev ? (
+			<a class="link prev" href={prev.href}>
+				<span class="label">&larr; Previous</span>
+				<span class="title">{prev.number} &middot; {prev.title}</span>
+			</a>
+		) : (
+			<span />
+		)
+	}
+	{
+		next ? (
+			<a class="link next" href={next.href}>
+				<span class="label">Next &rarr;</span>
+				<span class="title">{next.number} &middot; {next.title}</span>
+			</a>
+		) : (
+			<span />
+		)
+	}
+</nav>
+
+<style>
+	.prev-next {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--space-4);
+		margin-top: var(--space-7);
+		padding-top: var(--space-6);
+		border-top: 1px solid var(--color-line);
+	}
+
+	.link {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-1);
+		padding: var(--space-4);
+		border: 1px solid var(--color-line);
+		border-radius: var(--radius-md);
+		text-decoration: none;
+		background: var(--color-surface-raised);
+	}
+
+	.link:hover {
+		border-color: var(--color-crimson-600);
+	}
+
+	.next {
+		text-align: right;
+		grid-column: 2;
+	}
+
+	.label {
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--color-ink-muted);
+	}
+
+	.title {
+		color: var(--color-navy-900);
+		font-weight: 600;
+	}
+
+	@media (max-width: 600px) {
+		.prev-next {
+			grid-template-columns: 1fr;
+		}
+
+		.next {
+			grid-column: 1;
+			text-align: left;
+		}
+	}
+</style>

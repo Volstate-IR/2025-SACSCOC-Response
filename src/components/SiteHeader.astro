@@ -1,0 +1,103 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/logo_white.png";
+---
+
+<header class="site-header">
+	<button
+		id="nav-toggle-button"
+		class="nav-toggle"
+		type="button"
+		aria-expanded="false"
+		aria-controls="sidebar"
+		aria-label="Toggle standards navigation"
+	>
+		<span></span>
+		<span></span>
+		<span></span>
+	</button>
+
+	<a class="brand" href="/">
+		<Image src={logo} alt="Volunteer State Community College" height={40} />
+		<span class="brand-text">
+			<span class="brand-title">Volunteer State Community College</span>
+			<span class="brand-subtitle">SACSCOC Fifth-Year Interim Report</span>
+		</span>
+	</a>
+</header>
+
+<style>
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 30;
+		display: flex;
+		align-items: center;
+		gap: var(--space-4);
+		height: var(--header-height);
+		padding: 0 var(--space-5);
+		background: var(--color-navy-900);
+		box-shadow: var(--shadow-md);
+	}
+
+	.brand {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		color: white;
+		text-decoration: none;
+	}
+
+	.brand:hover {
+		color: white;
+	}
+
+	.brand-text {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.2;
+	}
+
+	.brand-title {
+		font-family: var(--font-serif);
+		font-size: 1.05rem;
+		font-weight: 700;
+	}
+
+	.brand-subtitle {
+		font-size: 0.8rem;
+		color: color-mix(in srgb, white 70%, transparent);
+	}
+
+	.nav-toggle {
+		display: none;
+		flex-direction: column;
+		justify-content: center;
+		gap: 5px;
+		width: 2.5rem;
+		height: 2.5rem;
+		padding: 0;
+		border: 0;
+		border-radius: var(--radius-sm);
+		background: transparent;
+		cursor: pointer;
+	}
+
+	.nav-toggle span {
+		display: block;
+		width: 22px;
+		height: 2px;
+		background: white;
+		border-radius: 2px;
+	}
+
+	@media (max-width: 900px) {
+		.nav-toggle {
+			display: flex;
+		}
+
+		.brand-subtitle {
+			display: none;
+		}
+	}
+</style>

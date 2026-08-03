@@ -1,0 +1,85 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PrevNextNav from "../../components/PrevNextNav.astro";
+
+export async function getStaticPaths() {
+	const standards = await getCollection("standards");
+	return standards.map((entry) => ({
+		params: { slug: entry.id },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const allEntries = (await getCollection("standards")).sort(
+	(a, b) => a.data.order - b.data.order,
+);
+const index = allEntries.findIndex((e) => e.id === entry.id);
+const prevEntry = index > 0 ? allEntries[index - 1] : undefined;
+const nextEntry = index < allEntries.length - 1 ? allEntries[index + 1] : undefined;
+
+const toLink = (e: (typeof allEntries)[number]) => ({
+	href: `/standards/${e.id}`,
+	number: e.data.number,
+	title: e.data.title,
+});
+---
+
+<BaseLayout title={`${entry.data.number} ${entry.data.title}`} description={entry.data.summary}>
+	<nav class="breadcrumb" aria-label="Breadcrumb">
+		<a href="/">Report Overview</a>
+		<span aria-hidden="true">/</span>
+		<span>Standard {entry.data.number}</span>
+	</nav>
+
+	<p class="badge">Standard {entry.data.number}</p>
+	<h1 class="page-title">{entry.data.title}</h1>
+
+	<p class="statement">{entry.data.statement}</p>
+
+	<div class="prose">
+		<Content />
+	</div>
+
+	<PrevNextNav prev={prevEntry && toLink(prevEntry)} next={nextEntry && toLink(nextEntry)} />
+</BaseLayout>
+
+<style>
+	.breadcrumb {
+		display: flex;
+		gap: var(--space-2);
+		align-items: center;
+		font-size: 0.85rem;
+		color: var(--color-ink-muted);
+		margin-bottom: var(--space-4);
+	}
+
+	.breadcrumb a {
+		color: var(--color-ink-muted);
+	}
+
+	.breadcrumb a:hover {
+		color: var(--color-crimson-600);
+	}
+
+	.page-title {
+		max-width: 90ch;
+	}
+
+	.statement {
+		max-width: 90ch;
+		font-family: var(--font-serif);
+		font-size: 1.15rem;
+		font-style: italic;
+		color: var(--color-navy-900);
+		padding: var(--space-4) var(--space-5);
+		margin: var(--space-5) 0 var(--space-7);
+		background: var(--color-surface);
+		border-left: 4px solid var(--color-navy-800);
+		border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+		box-sizing: border-box;
+	}
+</style>

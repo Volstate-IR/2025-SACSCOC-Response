@@ -1,0 +1,73 @@
+---
+import SiteHeader from "../components/SiteHeader.astro";
+import Sidebar from "../components/Sidebar.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import "../styles/global.css";
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "Volunteer State Community College's SACSCOC Fifth-Year Interim Report." } = Astro.props;
+const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{title} · VSCC 2025 Fifth Year Response</title>
+	</head>
+	<body>
+		<SiteHeader />
+		<div class="shell">
+			<Sidebar currentPath={currentPath} />
+			<main class="content">
+				<slot />
+			</main>
+		</div>
+		<SiteFooter />
+
+		<script>
+			const toggle = document.getElementById("nav-toggle-button");
+			const backdrop = document.getElementById("sidebar-backdrop");
+
+			function closeNav() {
+				document.body.classList.remove("nav-open");
+				toggle?.setAttribute("aria-expanded", "false");
+			}
+
+			toggle?.addEventListener("click", () => {
+				const isOpen = document.body.classList.toggle("nav-open");
+				toggle.setAttribute("aria-expanded", String(isOpen));
+			});
+
+			backdrop?.addEventListener("click", closeNav);
+		</script>
+	</body>
+</html>
+
+<style>
+	.shell {
+		display: flex;
+		align-items: flex-start;
+	}
+
+	.content {
+		flex: 1;
+		min-width: 0;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: var(--space-7) var(--space-6);
+	}
+
+	@media (max-width: 900px) {
+		.content {
+			padding: var(--space-6) var(--space-4);
+		}
+	}
+</style>

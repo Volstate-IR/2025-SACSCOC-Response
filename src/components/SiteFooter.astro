@@ -1,0 +1,37 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<p>
+		<a href="https://www.volstate.edu" target="_blank" rel="noreferrer">Volunteer State Community College</a>
+		<span aria-hidden="true"> · </span>
+		<a href="https://www.tbr.edu" target="_blank" rel="noreferrer">A Member of the Tennessee Board of Regents System</a>
+	</p>
+	<p class="fine-print">&copy; {year} Volunteer State Community College. Prepared for SACSCOC accreditation review.</p>
+</footer>
+
+<style>
+	.site-footer {
+		padding: var(--space-6) var(--space-5);
+		text-align: center;
+		background: var(--color-navy-900);
+		color: color-mix(in srgb, white 85%, transparent);
+	}
+
+	.site-footer a {
+		color: white;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	.fine-print {
+		margin: var(--space-2) 0 0;
+		font-size: 0.8rem;
+		color: color-mix(in srgb, white 55%, transparent);
+	}
+
+	.site-footer p {
+		margin: 0;
+	}
+</style>

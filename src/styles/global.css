@@ -1,0 +1,161 @@
+:root {
+	/* Brand — approximated from the VSCC logo; tune once exact hex values are confirmed */
+	--color-navy-900: #10193f;
+	--color-navy-800: #1b2a5e;
+	--color-navy-700: #26397a;
+	--color-crimson-700: #7f1526;
+	--color-crimson-600: #9e1b32;
+	--color-crimson-500: #b8243d;
+
+	--color-ink: #1a1d24;
+	--color-ink-muted: #4d5262;
+	--color-line: #dfe2ea;
+	--color-paper: #ffffff;
+	--color-surface: #f5f6fa;
+	--color-surface-raised: #ffffff;
+
+	--font-sans: -apple-system, "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
+	--font-serif: Georgia, "Times New Roman", serif;
+
+	--space-1: 0.25rem;
+	--space-2: 0.5rem;
+	--space-3: 0.75rem;
+	--space-4: 1rem;
+	--space-5: 1.5rem;
+	--space-6: 2rem;
+	--space-7: 3rem;
+	--space-8: 4rem;
+
+	--radius-sm: 6px;
+	--radius-md: 10px;
+	--radius-lg: 16px;
+
+	--shadow-sm: 0 1px 2px rgba(16, 25, 63, 0.06);
+	--shadow-md: 0 4px 16px rgba(16, 25, 63, 0.08);
+
+	--header-height: 4.25rem;
+	--sidebar-width: 17.5rem;
+
+	color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	font-family: var(--font-sans);
+	color: var(--color-ink);
+	background: var(--color-surface);
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	font-family: var(--font-serif);
+	color: var(--color-navy-900);
+	line-height: 1.25;
+	margin: 0 0 var(--space-4);
+}
+
+h1 {
+	font-size: clamp(1.9rem, 1.6rem + 1.2vw, 2.6rem);
+}
+
+h2 {
+	font-size: 1.6rem;
+	margin-top: var(--space-7);
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: var(--space-6);
+}
+
+p {
+	margin: 0 0 var(--space-4);
+}
+
+a {
+	color: var(--color-crimson-600);
+}
+
+a:hover {
+	color: var(--color-crimson-700);
+}
+
+ul,
+ol {
+	padding-left: 1.25em;
+}
+
+/* Prose content rendered from markdown standard pages */
+.prose {
+	max-width: 90ch;
+	font-size: 1.125rem;
+}
+
+.prose blockquote {
+	margin: var(--space-5) 0;
+	padding: var(--space-4) var(--space-5);
+	background: var(--color-surface);
+	border-left: 4px solid var(--color-crimson-600);
+	border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+	color: var(--color-ink-muted);
+}
+
+.prose blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+.prose sup.citation a {
+	padding: 0 0.15em;
+	font-size: 0.75em;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.prose sup.citation a:hover {
+	text-decoration: underline;
+}
+
+.prose .citation-index {
+	margin-top: var(--space-6);
+	border-top: 1px solid var(--color-line);
+}
+
+.prose .citation-index ol {
+	padding-left: 1.5em;
+}
+
+.callout {
+	padding: var(--space-5);
+	background: var(--color-surface-raised);
+	border: 1px solid var(--color-line);
+	border-radius: var(--radius-md);
+	box-shadow: var(--shadow-sm);
+}
+
+.badge {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-2);
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	color: var(--color-navy-700);
+	background: color-mix(in srgb, var(--color-navy-800) 8%, white);
+	border-radius: 999px;
+	padding: var(--space-1) var(--space-3);
+}
