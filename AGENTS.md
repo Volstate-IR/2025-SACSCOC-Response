@@ -20,3 +20,6 @@ Consult these guides before working on related tasks:
 - [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
 - [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
 - [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+
+## When coding
+When checking your work, please do not generate screenshots. This is a corporate computer that has stricter access requirements. Looking at the HTML will be sufficient and I will provide manual feedback. Do NOT use claude browser

@@ -17,8 +17,8 @@ const { prev, next } = Astro.props;
 	{
 		prev ? (
 			<a class="link prev" href={prev.href}>
-				<span class="label">&larr; Previous</span>
-				<span class="title">{prev.number} &middot; {prev.title}</span>
+				<span class="label"><span class="arrow">&larr;</span> Previous</span>
+				<span class="title"><span class="numeral">{prev.number}</span> {prev.title}</span>
 			</a>
 		) : (
 			<span />
@@ -27,8 +27,8 @@ const { prev, next } = Astro.props;
 	{
 		next ? (
 			<a class="link next" href={next.href}>
-				<span class="label">Next &rarr;</span>
-				<span class="title">{next.number} &middot; {next.title}</span>
+				<span class="label">Next <span class="arrow">&rarr;</span></span>
+				<span class="title"><span class="numeral">{next.number}</span> {next.title}</span>
 			</a>
 		) : (
 			<span />
@@ -54,11 +54,23 @@ const { prev, next } = Astro.props;
 		border: 1px solid var(--color-line);
 		border-radius: var(--radius-md);
 		text-decoration: none;
-		background: var(--color-surface-raised);
+		background: var(--color-surface);
+		transition:
+			transform 0.15s ease,
+			border-color 0.15s ease,
+			box-shadow 0.15s ease;
 	}
 
 	.link:hover {
-		border-color: var(--color-crimson-600);
+		border-color: var(--color-blue-700);
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.link:active {
+		transform: translateY(0);
+		box-shadow: none;
+		transition-duration: 0.05s;
 	}
 
 	.next {
@@ -72,11 +84,33 @@ const { prev, next } = Astro.props;
 		letter-spacing: 0.04em;
 		text-transform: uppercase;
 		color: var(--color-ink-muted);
+		transition: color 0.15s ease;
+	}
+
+	.link:hover .label {
+		color: var(--color-blue-700);
+	}
+
+	.arrow {
+		display: inline-block;
+		transition: transform 0.15s ease;
+	}
+
+	.prev:hover .arrow {
+		transform: translateX(-3px);
+	}
+
+	.next:hover .arrow {
+		transform: translateX(3px);
 	}
 
 	.title {
-		color: var(--color-navy-900);
+		color: var(--color-ink);
 		font-weight: 600;
+	}
+
+	.title .numeral {
+		margin-right: var(--space-2);
 	}
 
 	@media (max-width: 600px) {

@@ -17,16 +17,19 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" href="/favicon.ico" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<title>{title} · VSCC 2025 Fifth Year Response</title>
 	</head>
 	<body>
+		<a class="skip-link" href="#main-content">Skip to content</a>
 		<SiteHeader />
 		<div class="shell">
 			<Sidebar currentPath={currentPath} />
-			<main class="content">
+			<main class="content" id="main-content" tabindex="-1">
 				<slot />
 			</main>
 		</div>
@@ -35,23 +38,58 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
 		<script>
 			const toggle = document.getElementById("nav-toggle-button");
 			const backdrop = document.getElementById("sidebar-backdrop");
+			const sidebar = document.getElementById("sidebar");
+
+			function setNavOpen(isOpen: boolean) {
+				document.body.classList.toggle("nav-open", isOpen);
+				toggle?.setAttribute("aria-expanded", String(isOpen));
+				// Sidebar is translated off-screen on mobile when closed, but stays
+				// in the DOM — inert keeps its links out of the tab order so
+				// keyboard focus can't land on invisible content.
+				if (window.matchMedia("(max-width: 900px)").matches) {
+					sidebar?.toggleAttribute("inert", !isOpen);
+				}
+			}
 
 			function closeNav() {
-				document.body.classList.remove("nav-open");
-				toggle?.setAttribute("aria-expanded", "false");
+				setNavOpen(false);
 			}
 
 			toggle?.addEventListener("click", () => {
-				const isOpen = document.body.classList.toggle("nav-open");
-				toggle.setAttribute("aria-expanded", String(isOpen));
+				setNavOpen(!document.body.classList.contains("nav-open"));
 			});
 
 			backdrop?.addEventListener("click", closeNav);
+
+			document.addEventListener("keydown", (event) => {
+				if (event.key === "Escape" && document.body.classList.contains("nav-open")) {
+					closeNav();
+					toggle?.focus();
+				}
+			});
 		</script>
 	</body>
 </html>
 
 <style>
+	.skip-link {
+		position: absolute;
+		top: -100%;
+		left: var(--space-4);
+		z-index: 50;
+		padding: var(--space-2) var(--space-4);
+		background: var(--color-blue-900);
+		color: white;
+		border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+		text-decoration: none;
+		font-weight: 600;
+		transition: top 0.15s ease;
+	}
+
+	.skip-link:focus {
+		top: 0;
+	}
+
 	.shell {
 		display: flex;
 		align-items: flex-start;
@@ -63,6 +101,10 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
 		max-width: 1200px;
 		margin: 0 auto;
 		padding: var(--space-7) var(--space-6);
+	}
+
+	.content:focus-visible {
+		outline: none;
 	}
 
 	@media (max-width: 900px) {

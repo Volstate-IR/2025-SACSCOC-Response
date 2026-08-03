@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import logo from "../assets/logo_white.png";
+import logo from "../assets/icon_white.png";
 ---
 
 <header class="site-header">
@@ -36,7 +36,8 @@ import logo from "../assets/logo_white.png";
 		gap: var(--space-4);
 		height: var(--header-height);
 		padding: 0 var(--space-5);
-		background: var(--color-navy-900);
+		background: var(--color-blue-900);
+		border-top: 3px solid var(--color-red-700);
 		box-shadow: var(--shadow-md);
 	}
 
@@ -59,7 +60,7 @@ import logo from "../assets/logo_white.png";
 	}
 
 	.brand-title {
-		font-family: var(--font-serif);
+		font-family: var(--font-display);
 		font-size: 1.05rem;
 		font-weight: 700;
 	}
@@ -81,6 +82,17 @@ import logo from "../assets/logo_white.png";
 		border-radius: var(--radius-sm);
 		background: transparent;
 		cursor: pointer;
+		transition:
+			background-color 0.15s ease,
+			transform 0.1s ease;
+	}
+
+	.nav-toggle:hover {
+		background: rgba(255, 255, 255, 0.1);
+	}
+
+	.nav-toggle:active {
+		transform: scale(0.92);
 	}
 
 	.nav-toggle span {
@@ -89,6 +101,22 @@ import logo from "../assets/logo_white.png";
 		height: 2px;
 		background: white;
 		border-radius: 2px;
+		transform-origin: center;
+		transition:
+			transform 0.25s ease,
+			opacity 0.2s ease;
+	}
+
+	.nav-toggle[aria-expanded="true"] span:nth-child(1) {
+		transform: translateY(7px) rotate(45deg);
+	}
+
+	.nav-toggle[aria-expanded="true"] span:nth-child(2) {
+		opacity: 0;
+	}
+
+	.nav-toggle[aria-expanded="true"] span:nth-child(3) {
+		transform: translateY(-7px) rotate(-45deg);
 	}
 
 	@media (max-width: 900px) {

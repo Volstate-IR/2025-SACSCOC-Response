@@ -32,8 +32,8 @@ const entries = (await getCollection("standards")).sort(
 						return (
 							<li>
 								<a href={href} aria-current={active ? "page" : undefined} class={active ? "link active" : "link"}>
-									<span class="link-number">{entry.data.number}</span>
-									<span>{entry.data.title}</span>
+									<span class="numeral link-number">{entry.data.number}</span>
+									<span class="link-title">{entry.data.title}</span>
 								</a>
 							</li>
 						);
@@ -55,11 +55,28 @@ const entries = (await getCollection("standards")).sort(
 		height: calc(100vh - var(--header-height));
 		overflow-y: auto;
 		padding: var(--space-5) var(--space-4);
-		background: var(--color-surface-raised);
+		background: var(--color-surface);
 		border-right: 1px solid var(--color-line);
+		scrollbar-width: thin;
+		scrollbar-color: var(--color-line) transparent;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	.sidebar::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	.sidebar::-webkit-scrollbar-thumb {
+		background: var(--color-line);
+		border-radius: 999px;
+	}
+
+	.sidebar::-webkit-scrollbar-thumb:hover {
+		background: var(--color-ink-muted);
 	}
 
 	.overview {
+		position: relative;
 		font-weight: 600;
 		margin-bottom: var(--space-5);
 	}
@@ -84,38 +101,78 @@ const entries = (await getCollection("standards")).sort(
 	}
 
 	.link {
+		position: relative;
 		display: flex;
 		align-items: baseline;
 		gap: var(--space-3);
 		padding: var(--space-2) var(--space-3);
-		border-left: 3px solid transparent;
+		padding-left: calc(var(--space-3) + 3px);
 		border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 		color: var(--color-ink);
 		text-decoration: none;
 		font-size: 0.92rem;
+		transition:
+			background-color 0.15s ease,
+			color 0.15s ease,
+			transform 0.15s ease;
+	}
+
+	.link::before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 18%;
+		bottom: 18%;
+		width: 3px;
+		border-radius: 2px;
+		background: var(--color-blue-700);
+		opacity: 0;
+		transform: scaleY(0.4);
+		transition:
+			opacity 0.15s ease,
+			transform 0.15s ease;
 	}
 
 	.link:hover {
-		background: var(--color-surface);
+		background: var(--color-paper);
 		color: var(--color-ink);
+		transform: translateX(2px);
+	}
+
+	.link:hover::before {
+		opacity: 0.35;
+		transform: scaleY(1);
+	}
+
+	.link:active {
+		background: var(--color-blue-100);
+		transform: translateX(2px) scale(0.98);
+		transition-duration: 0.05s;
 	}
 
 	.link.active {
-		background: color-mix(in srgb, var(--color-crimson-600) 10%, white);
-		border-left-color: var(--color-crimson-600);
-		color: var(--color-crimson-700);
+		background: var(--color-blue-100);
+		color: var(--color-blue-700);
 		font-weight: 600;
+	}
+
+	.link.active::before {
+		opacity: 1;
+		transform: scaleY(1);
 	}
 
 	.link-number {
 		flex: none;
-		font-variant-numeric: tabular-nums;
-		color: var(--color-ink-muted);
-		font-size: 0.82rem;
+		transition: transform 0.15s ease;
 	}
 
-	.link.active .link-number {
-		color: var(--color-crimson-600);
+	.link:hover .link-number {
+		transform: scale(1.06);
+	}
+
+	.link-title {
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.sidebar-backdrop {
@@ -131,7 +188,7 @@ const entries = (await getCollection("standards")).sort(
 			z-index: 40;
 			height: auto;
 			transform: translateX(-100%);
-			transition: transform 0.2s ease;
+			transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 			box-shadow: var(--shadow-md);
 		}
 
@@ -144,15 +201,22 @@ const entries = (await getCollection("standards")).sort(
 			position: fixed;
 			inset: var(--header-height) 0 0 0;
 			z-index: 35;
-			background: rgba(16, 25, 63, 0.4);
+			background: rgba(15, 42, 82, 0.4);
 			opacity: 0;
 			pointer-events: none;
-			transition: opacity 0.2s ease;
+			transition:
+				opacity 0.2s ease,
+				backdrop-filter 0.2s ease;
 		}
 
 		:global(body.nav-open) .sidebar-backdrop {
 			opacity: 1;
 			pointer-events: auto;
+			backdrop-filter: blur(1px);
+		}
+
+		.link:hover {
+			transform: none;
 		}
 	}
 </style>

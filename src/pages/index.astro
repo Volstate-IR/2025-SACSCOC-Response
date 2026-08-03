@@ -40,7 +40,7 @@ const entries = (await getCollection("standards")).sort(
 		<h2>Navigating This Report</h2>
 		<p>This site organizes the College's response by SACSCOC standard. There are three ways to move through it:</p>
 		<ol>
-			<li>Use the <strong>sidebar</strong> to jump directly to any standard, grouped by category.</li>
+			<li>Use the <strong>sidebar</strong> to jump directly to any standard.</li>
 			<li>Use the <strong>previous / next</strong> links at the bottom of each standard's narrative to read in order.</li>
 			<li>Use the <strong>standards index</strong> below for an overview of everything addressed in this report.</li>
 		</ol>
@@ -53,7 +53,7 @@ const entries = (await getCollection("standards")).sort(
 				entries.map((entry) => (
 					<li>
 						<a class="card" href={`/standards/${entry.id}`}>
-							<span class="card-number">{entry.data.number}</span>
+							<span class="numeral card-number">{entry.data.number}</span>
 							<span class="card-title">{entry.data.title}</span>
 							<span class="card-summary">{entry.data.statement}</span>
 						</a>
@@ -89,7 +89,7 @@ const entries = (await getCollection("standards")).sort(
 		justify-content: flex-end;
 		gap: var(--space-2);
 		padding: var(--space-7) var(--space-6);
-		background: linear-gradient(0deg, rgba(16, 25, 63, 0.92) 0%, rgba(16, 25, 63, 0.35) 60%, rgba(16, 25, 63, 0.05) 100%);
+		background: linear-gradient(0deg, rgba(15, 42, 82, 0.94) 0%, rgba(15, 42, 82, 0.45) 60%, rgba(15, 42, 82, 0.08) 100%);
 		color: white;
 	}
 
@@ -104,10 +104,10 @@ const entries = (await getCollection("standards")).sort(
 		margin: 0;
 	}
 
-	.badge {
+	.hero .badge {
 		width: fit-content;
 		color: white;
-		background: color-mix(in srgb, var(--color-crimson-600) 70%, transparent);
+		background: color-mix(in srgb, var(--color-red-700) 78%, transparent);
 	}
 
 	.info-block {
@@ -133,7 +133,7 @@ const entries = (await getCollection("standards")).sort(
 	.info-block dd {
 		margin: 0;
 		font-weight: 600;
-		color: var(--color-navy-900);
+		color: var(--color-ink);
 	}
 
 	.navigating {
@@ -166,25 +166,26 @@ const entries = (await getCollection("standards")).sort(
 		padding: var(--space-4);
 		border: 1px solid var(--color-line);
 		border-radius: var(--radius-md);
-		background: var(--color-surface-raised);
+		background: var(--color-surface);
 		text-decoration: none;
 		box-shadow: var(--shadow-sm);
+		transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 	}
 
 	.card:hover {
-		border-color: var(--color-crimson-600);
+		border-color: var(--color-blue-700);
 		box-shadow: var(--shadow-md);
+		transform: translateY(-1px);
 	}
 
 	.card-number {
-		font-size: 0.8rem;
-		font-weight: 700;
-		color: var(--color-crimson-600);
+		width: fit-content;
 	}
 
 	.card-title {
 		font-weight: 600;
-		color: var(--color-navy-900);
+		font-family: var(--font-display);
+		color: var(--color-ink);
 	}
 
 	.card-summary {
