@@ -1,8 +1,6 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../assets/icon_white.png";
-
-const base = import.meta.env.BASE_URL.replace(/\/+$/, "") || "/";
 ---
 
 <header class="site-header">
@@ -19,7 +17,7 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, "") || "/";
 		<span></span>
 	</button>
 
-	<a class="brand" href={base}>
+	<a class="brand" href="/index.html">
 		<Image src={logo} alt="Volunteer State Community College" height={40} />
 		<span class="brand-text">
 			<span class="brand-title">Volunteer State Community College</span>

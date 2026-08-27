@@ -136,18 +136,7 @@ function buildIndexNodes(entries) {
  * Evidence list) also gets target="_blank" so evidence never navigates away
  * from the response page, even when it isn't wired up as an inline citation.
  */
-export default function rehypeCite(base = "") {
-	const normalizedBase = base.replace(/\/+$/, "");
-
-	/** Root-relative hrefs (e.g. "/documents/…") need the site's base path
-	 * prepended so they resolve correctly when deployed under a subpath
-	 * (e.g. GitHub Pages project sites). Absolute URLs, protocol-relative
-	 * URLs, and fragments/mailto/tel links are left untouched. */
-	function withBase(href) {
-		if (!normalizedBase || !href.startsWith("/") || href.startsWith("//")) return href;
-		return `${normalizedBase}${href}`;
-	}
-
+export default function rehypeCite() {
 	return (tree) => {
 		let counter = 0;
 		const numberByHref = new Map();
@@ -157,8 +146,6 @@ export default function rehypeCite(base = "") {
 			if (!(parent && typeof index === "number" && node.tagName === "a" && node.properties?.href)) {
 				return;
 			}
-
-			node.properties.href = withBase(node.properties.href);
 
 			const isCite =
 				node.children?.length === 1 &&

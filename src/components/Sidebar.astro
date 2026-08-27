@@ -11,8 +11,7 @@ const entries = (await getCollection("standards")).sort(
 	(a, b) => a.data.order - b.data.order,
 );
 
-const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
-const homeHref = base || "/";
+const homeHref = "/index.html";
 ---
 
 <aside class="sidebar" id="sidebar">
@@ -30,7 +29,7 @@ const homeHref = base || "/";
 			<ul>
 				{
 					entries.map((entry) => {
-						const href = `${base}/standards/${entry.id}`;
+						const href = `/standards/${entry.id}.html`;
 						const active = currentPath === href;
 						return (
 							<li>

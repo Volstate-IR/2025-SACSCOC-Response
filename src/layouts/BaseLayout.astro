@@ -10,14 +10,14 @@ interface Props {
 }
 
 const { title, description = "Volunteer State Community College's SACSCOC Fifth-Year Interim Report." } = Astro.props;
-const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
-const currentPath = Astro.url.pathname.replace(/\/+$/, "") || base || "/";
+const trimmedPath = Astro.url.pathname.replace(/\/+$/, "");
+const currentPath = trimmedPath ? `${trimmedPath}.html` : "/index.html";
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" href={`${base}/favicon.ico`} />
+		<link rel="icon" href="/favicon.ico" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -44,12 +44,12 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, "") || base || "/";
 			<span>Back to top</span>
 		</button>
 
-		<script>
+		<script is:inline>
 			const toggle = document.getElementById("nav-toggle-button");
 			const backdrop = document.getElementById("sidebar-backdrop");
 			const sidebar = document.getElementById("sidebar");
 
-			function setNavOpen(isOpen: boolean) {
+			function setNavOpen(isOpen) {
 				document.body.classList.toggle("nav-open", isOpen);
 				toggle?.setAttribute("aria-expanded", String(isOpen));
 				// Sidebar is translated off-screen on mobile when closed, but stays

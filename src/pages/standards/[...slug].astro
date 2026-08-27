@@ -21,10 +21,8 @@ const index = allEntries.findIndex((e) => e.id === entry.id);
 const prevEntry = index > 0 ? allEntries[index - 1] : undefined;
 const nextEntry = index < allEntries.length - 1 ? allEntries[index + 1] : undefined;
 
-const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
-
 const toLink = (e: (typeof allEntries)[number]) => ({
-	href: `${base}/standards/${e.id}`,
+	href: `/standards/${e.id}.html`,
 	number: e.data.number,
 	title: e.data.title,
 });
@@ -32,7 +30,7 @@ const toLink = (e: (typeof allEntries)[number]) => ({
 
 <BaseLayout title={`${entry.data.number} ${entry.data.title}`} description={entry.data.summary}>
 	<nav class="breadcrumb" aria-label="Breadcrumb">
-		<a href={base || "/"}>Report Overview</a>
+		<a href="/index.html">Report Overview</a>
 		<span aria-hidden="true">/</span>
 		<span aria-current="page">Standard {entry.data.number}</span>
 	</nav>
