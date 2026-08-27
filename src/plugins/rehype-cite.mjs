@@ -23,6 +23,15 @@ function textOf(node) {
 	return (node.children ?? []).map(textOf).join("");
 }
 
+/** Heading slugs that get the "Evidence" exhibit-card styling (see global.css `[data-evidence]`).
+ * Add a standard's custom evidence heading here to opt it into the same appearance. */
+const EVIDENCE_HEADING_SLUGS = new Set([
+	"evidence",
+	"supporting-documentation",
+	"evaluations-for-administrative-officers",
+	"evaluations-for-academic-officers",
+]);
+
 /**
  * Groups the tree's top-level nodes into `<section data-block="…">` blocks,
  * one per h2, so each part of a standard's response (Committee Findings,
@@ -52,10 +61,15 @@ function wrapSections(tree) {
 
 	tree.children = groups.map((group) => {
 		if (!group.slug) return group.nodes[0];
+		const evidence = EVIDENCE_HEADING_SLUGS.has(group.slug);
 		return {
 			type: "element",
 			tagName: "section",
-			properties: { className: ["block"], "data-block": group.slug },
+			properties: {
+				className: ["block"],
+				"data-block": group.slug,
+				...(evidence ? { "data-evidence": "true" } : {}),
+			},
 			children: group.nodes,
 		};
 	});
