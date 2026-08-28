@@ -221,6 +221,12 @@ ol {
 
 .prose td a {
 	font-weight: 500;
+	text-decoration: none;
+}
+
+.prose td a:hover {
+	color: var(--color-blue-600);
+	text-decoration: underline;
 }
 
 .prose > [data-block="committee-findings"] h2 {
